@@ -1,137 +1,129 @@
-[gd_scene load_steps=12 format=3 uid="uid://54wjryxrfomf"]
+[gd_scene load_steps=4 format=3 uid="uid://54wjryxrfomf"]
 
 [ext_resource type="Script" path="res://forecast_day.gd" id="1_qngxn"]
-[ext_resource type="Texture2D" uid="uid://dvqlqlnk5e4vj" path="res://info.png" id="2_c51dd"]
-
-[sub_resource type="SystemFont" id="SystemFont_gcomb"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_lxyay"]
-font = SubResource("SystemFont_gcomb")
-font_size = 28
-font_color = Color(0, 0, 0, 1)
-
-[sub_resource type="SystemFont" id="SystemFont_ro1vi"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_m7ee1"]
-font = SubResource("SystemFont_ro1vi")
-font_size = 20
-
-[sub_resource type="SystemFont" id="SystemFont_ckrfi"]
-subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_5e3pd"]
-font = SubResource("SystemFont_ckrfi")
-font_size = 20
 
-[sub_resource type="SystemFont" id="SystemFont_1yc7s"]
-subpixel_positioning = 0
-
-[sub_resource type="LabelSettings" id="LabelSettings_lybmv"]
-font = SubResource("SystemFont_1yc7s")
-
-[sub_resource type="LabelSettings" id="LabelSettings_a581u"]
-font_size = 24
-font_color = Color(0, 0, 0, 1)
+[sub_resource type="LabelSettings" id="LabelSettings_m7ee1"]
 
 [node name="ForecastDay" type="Node2D"]
 script = ExtResource("1_qngxn")
 
 [node name="ColorRect" type="ColorRect" parent="."]
-offset_left = 496.0
-offset_right = 800.0
-offset_bottom = 40.0
-color = Color(0.360784, 0.501961, 0.737255, 1)
+offset_right = 160.0
+offset_bottom = 96.0
+color = Color(0, 0, 0, 0.501961)
 
 [node name="Period" type="Label" parent="."]
-offset_left = 499.0
-offset_right = 733.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(160, 0)
+offset_top = 1.0
+offset_right = 160.0
+offset_bottom = 21.0
+theme_override_colors/font_color = Color(0.636149, 0.804188, 0.998243, 1)
+theme_override_font_sizes/font_size = 14
 text = "TONIGHT"
-label_settings = SubResource("LabelSettings_lxyay")
-
-[node name="Temp" type="Label" parent="."]
-offset_left = 761.0
-offset_right = 796.0
-offset_bottom = 40.0
-text = "32"
-label_settings = SubResource("LabelSettings_m7ee1")
+horizontal_alignment = 1
 vertical_alignment = 1
+text_overrun_behavior = 1
 
 [node name="TempLabel" type="Label" parent="."]
-offset_left = 683.0
-offset_right = 753.0
-offset_bottom = 40.0
+custom_minimum_size = Vector2(80, 23)
+offset_top = 74.0
+offset_right = 80.0
+offset_bottom = 97.0
 text = "High"
 label_settings = SubResource("LabelSettings_5e3pd")
 horizontal_alignment = 2
 vertical_alignment = 1
+uppercase = true
+
+[node name="Temp" type="Label" parent="."]
+custom_minimum_size = Vector2(70, 0)
+offset_left = 90.0
+offset_top = 74.0
+offset_right = 170.0
+offset_bottom = 97.0
+theme_override_font_sizes/font_size = 14
+text = "32"
+label_settings = SubResource("LabelSettings_m7ee1")
+vertical_alignment = 1
 
 [node name="Forecast" type="Label" parent="."]
-offset_left = 496.0
-offset_top = 40.0
-offset_right = 800.0
-offset_bottom = 89.0
+custom_minimum_size = Vector2(150, 0)
+offset_left = 5.0
+offset_top = 18.0
+offset_right = 155.0
+offset_bottom = 74.0
+theme_override_font_sizes/font_size = 10
 text = "Mostly Clear"
-label_settings = SubResource("LabelSettings_lybmv")
+vertical_alignment = 1
 autowrap_mode = 3
 clip_text = true
 text_overrun_behavior = 3
 
 [node name="OpenDetail" type="Button" parent="."]
-offset_left = 754.0
-offset_top = 41.0
-offset_right = 798.0
-offset_bottom = 77.0
-icon = ExtResource("2_c51dd")
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 160.0
+offset_bottom = 97.0
+flat = true
 icon_alignment = 1
 expand_icon = true
 
 [node name="ForecastDetailWindow" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ForecastDetailWindow"]
-offset_left = 87.0
-offset_top = 89.0
-offset_right = 733.0
-offset_bottom = 411.0
+offset_left = 2.0
+offset_right = 802.0
+offset_bottom = 480.0
+color = Color(0.262745, 0.262745, 0.262745, 1)
+
+[node name="WeatherIcon" type="TextureRect" parent="ForecastDetailWindow"]
+custom_minimum_size = Vector2(86, 86)
+offset_left = 65.0
+offset_top = 94.0
+offset_right = 151.0
+offset_bottom = 180.0
 
 [node name="Period" type="Label" parent="ForecastDetailWindow"]
-offset_left = 104.0
-offset_top = 99.0
-offset_right = 338.0
-offset_bottom = 139.0
+offset_left = 61.0
+offset_top = 44.0
+offset_right = 295.0
+offset_bottom = 94.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
 text = "TONIGHT"
-label_settings = SubResource("LabelSettings_lxyay")
+uppercase = true
 
 [node name="Temp" type="Label" parent="ForecastDetailWindow"]
-offset_left = 589.0
-offset_top = 99.0
-offset_right = 624.0
-offset_bottom = 139.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 28
+offset_left = 527.0
+offset_top = 46.0
+offset_right = 613.0
+offset_bottom = 96.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
 text = "32"
+horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TempLabel" type="Label" parent="ForecastDetailWindow"]
-offset_left = 499.0
-offset_top = 99.0
-offset_right = 569.0
-offset_bottom = 139.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+offset_left = 425.0
+offset_top = 51.0
+offset_right = 530.0
+offset_bottom = 91.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "High"
-horizontal_alignment = 2
+horizontal_alignment = 1
 vertical_alignment = 1
+uppercase = true
 
 [node name="Forecast" type="Label" parent="ForecastDetailWindow"]
-offset_left = 104.0
-offset_top = 139.0
-offset_right = 408.0
-offset_bottom = 188.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+offset_left = 184.0
+offset_top = 104.0
+offset_right = 661.0
+offset_bottom = 191.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "Mostly Clear"
 autowrap_mode = 3
@@ -139,29 +131,32 @@ clip_text = true
 text_overrun_behavior = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ForecastDetailWindow"]
-offset_left = 127.0
-offset_top = 186.0
-offset_right = 683.0
-offset_bottom = 366.0
+offset_left = 58.0
+offset_top = 207.0
+offset_right = 749.0
+offset_bottom = 424.0
 
 [node name="ForecastDetail" type="Label" parent="ForecastDetailWindow/ScrollContainer"]
-custom_minimum_size = Vector2(500, 180)
+custom_minimum_size = Vector2(650, 200)
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "hello world"
-label_settings = SubResource("LabelSettings_a581u")
 autowrap_mode = 3
 
 [node name="CloseButton" type="Button" parent="ForecastDetailWindow"]
-offset_left = 666.0
-offset_top = 99.0
-offset_right = 724.0
-offset_bottom = 139.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 31
+offset_left = 682.0
+offset_top = 14.0
+offset_right = 782.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 48
 text = "X"
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(2, 0)
+offset_right = 2.0
+offset_bottom = 96.0
+color = Color(0.113725, 0.305882, 0.537255, 0.501961)
 
 [connection signal="pressed" from="OpenDetail" to="." method="_on_open_detail_pressed"]
 [connection signal="pressed" from="ForecastDetailWindow/CloseButton" to="." method="_on_close_button_pressed"]

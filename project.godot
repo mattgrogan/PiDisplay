@@ -13,12 +13,14 @@ config_version=5
 config/name="PiDisplay"
 run/main_scene="res://pi_display.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+boot_splash/bg_color=Color(0.366595, 0.366595, 0.366595, 1)
 config/icon="res://icon.svg"
 
 [display]
 
 window/size/viewport_width=800
 window/size/viewport_height=480
+window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input_devices]
@@ -29,4 +31,3 @@ pointing/emulate_touch_from_mouse=true
 
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-environment/defaults/default_clear_color=Color(0, 0, 0, 1)

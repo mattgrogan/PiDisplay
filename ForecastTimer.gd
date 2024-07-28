@@ -31,7 +31,7 @@ func _on_request_completed(result, response_code, headers, body):
 	self._update_forecast(json, 3, "%ForecastPeriod3")
 	self._update_forecast(json, 4, "%ForecastPeriod4")
 	
-	self.download_image(json["data"]["iconLink"][0])
+	#self.download_image(json["data"]["iconLink"][0])
 
 func _update_forecast(json, index, node):
 	var period =(json["time"]["startPeriodName"][index])
@@ -39,8 +39,9 @@ func _update_forecast(json, index, node):
 	var temp_label = json["time"]["tempLabel"][index]
 	var weather = json["data"]["weather"][index]
 	var detail = json["data"]["text"][index]
+	var icon_url = json["data"]["iconLink"][index]
 	
-	get_node(node).update(period, temp, temp_label, weather, detail)
+	get_node(node).update(period, temp, temp_label, weather, detail, icon_url)
 
 func download_image(url):
 	# Create an HTTP request node and connect its completion signal.

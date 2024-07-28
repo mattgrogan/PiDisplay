@@ -13,4 +13,5 @@ func _process(delta):
 
 func _on_pressed():
 	print_debug("Button Pressed")
-	pass # Replace with function body.
+	get_tree().quit()
+

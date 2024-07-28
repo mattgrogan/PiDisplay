@@ -95,10 +95,10 @@ label_settings = SubResource("LabelSettings_3ioaa")
 [node name="HUD" type="CanvasLayer" parent="TimeDisplay"]
 
 [node name="TestButton" type="Button" parent="TimeDisplay/HUD"]
-offset_left = 324.0
-offset_top = 281.0
-offset_right = 461.0
-offset_bottom = 437.0
+offset_left = 590.0
+offset_top = 144.0
+offset_right = 727.0
+offset_bottom = 300.0
 text = "
 test 
 button"
@@ -106,29 +106,23 @@ script = ExtResource("4_mbjm5")
 
 [node name="ForecastPeriod0" parent="TimeDisplay" instance=ExtResource("4_uw6a0")]
 unique_name_in_owner = true
-position = Vector2(0, 99)
+position = Vector2(0, 384)
 
 [node name="ForecastPeriod1" parent="TimeDisplay" instance=ExtResource("4_uw6a0")]
 unique_name_in_owner = true
-position = Vector2(0, 174)
+position = Vector2(160, 384)
 
 [node name="ForecastPeriod2" parent="TimeDisplay" instance=ExtResource("4_uw6a0")]
 unique_name_in_owner = true
-position = Vector2(0, 238)
+position = Vector2(320, 384)
 
 [node name="ForecastPeriod3" parent="TimeDisplay" instance=ExtResource("4_uw6a0")]
 unique_name_in_owner = true
-position = Vector2(-3, 306)
+position = Vector2(480, 384)
 
 [node name="ForecastPeriod4" parent="TimeDisplay" instance=ExtResource("4_uw6a0")]
 unique_name_in_owner = true
-position = Vector2(-7, 383)
-
-[node name="TextureRect" type="TextureRect" parent="TimeDisplay"]
-unique_name_in_owner = true
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
+position = Vector2(640, 384)
 
 [node name="Connectors" type="Node" parent="."]
 
