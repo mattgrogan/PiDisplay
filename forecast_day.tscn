@@ -11,12 +11,17 @@ offset_right = 160.0
 offset_bottom = 96.0
 color = Color(0, 0, 0, 0.501961)
 
+[node name="ColorRect3" type="ColorRect" parent="ColorRect"]
+offset_right = 160.0
+offset_bottom = 22.0
+color = Color(0, 0, 0, 0.501961)
+
 [node name="Period" type="Label" parent="."]
 custom_minimum_size = Vector2(160, 0)
 offset_top = 1.0
 offset_right = 160.0
 offset_bottom = 21.0
-theme_override_colors/font_color = Color(0.636149, 0.804188, 0.998243, 1)
+theme_override_colors/font_color = Color(0.203969, 0.593687, 0.988413, 1)
 theme_override_font_sizes/font_size = 14
 text = "TONIGHT"
 horizontal_alignment = 1
