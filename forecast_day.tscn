@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dvqlqlnk5e4vj" path="res://info.png" id="2_c51dd"]
 
 [sub_resource type="SystemFont" id="SystemFont_gcomb"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_lxyay"]
 font = SubResource("SystemFont_gcomb")
@@ -11,18 +12,21 @@ font_size = 28
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="SystemFont" id="SystemFont_ro1vi"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_m7ee1"]
 font = SubResource("SystemFont_ro1vi")
 font_size = 20
 
 [sub_resource type="SystemFont" id="SystemFont_ckrfi"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_5e3pd"]
 font = SubResource("SystemFont_ckrfi")
 font_size = 20
 
 [sub_resource type="SystemFont" id="SystemFont_1yc7s"]
+subpixel_positioning = 0
 
 [sub_resource type="LabelSettings" id="LabelSettings_lybmv"]
 font = SubResource("SystemFont_1yc7s")

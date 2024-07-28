@@ -11,8 +11,9 @@ func _process(delta):
 	var time = Time.get_time_dict_from_system()
 	var ampm = "AM"
 	var hour = time.hour
+	if hour >= 12:
+		ampm = "PM"
 	if hour > 12:
 		hour = hour - 12
-		ampm = "PM"
 	self.text = "%d:%02d %s" % [hour, time.minute, ampm]
 	
