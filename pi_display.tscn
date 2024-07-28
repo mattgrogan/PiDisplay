@@ -126,6 +126,7 @@ position = Vector2(-7, 383)
 
 [node name="TextureRect" type="TextureRect" parent="TimeDisplay"]
 unique_name_in_owner = true
+visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
