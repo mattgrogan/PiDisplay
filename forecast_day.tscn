@@ -1,15 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://54wjryxrfomf"]
+[gd_scene load_steps=2 format=3 uid="uid://54wjryxrfomf"]
 
 [ext_resource type="Script" path="res://forecast_day.gd" id="1_qngxn"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_5e3pd"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_m7ee1"]
 
 [node name="ForecastDay" type="Node2D"]
 script = ExtResource("1_qngxn")
 
 [node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(0, 100.635)
 offset_right = 160.0
 offset_bottom = 96.0
 color = Color(0, 0, 0, 0.501961)
@@ -27,12 +24,12 @@ vertical_alignment = 1
 text_overrun_behavior = 1
 
 [node name="TempLabel" type="Label" parent="."]
-custom_minimum_size = Vector2(80, 23)
+custom_minimum_size = Vector2(70, 0)
 offset_top = 74.0
 offset_right = 80.0
-offset_bottom = 97.0
+offset_bottom = 96.0
+theme_override_font_sizes/font_size = 14
 text = "High"
-label_settings = SubResource("LabelSettings_5e3pd")
 horizontal_alignment = 2
 vertical_alignment = 1
 uppercase = true
@@ -45,7 +42,6 @@ offset_right = 170.0
 offset_bottom = 97.0
 theme_override_font_sizes/font_size = 14
 text = "32"
-label_settings = SubResource("LabelSettings_m7ee1")
 vertical_alignment = 1
 
 [node name="Forecast" type="Label" parent="."]
@@ -62,6 +58,7 @@ clip_text = true
 text_overrun_behavior = 3
 
 [node name="OpenDetail" type="Button" parent="."]
+custom_minimum_size = Vector2(0, 96)
 offset_left = 1.0
 offset_top = 1.0
 offset_right = 160.0
@@ -71,6 +68,9 @@ icon_alignment = 1
 expand_icon = true
 
 [node name="ForecastDetailWindow" type="CanvasLayer" parent="."]
+visible = false
+offset = Vector2(-2, 0)
+transform = Transform2D(1, 0, 0, 1, -2, 0)
 
 [node name="ColorRect" type="ColorRect" parent="ForecastDetailWindow"]
 offset_left = 2.0
