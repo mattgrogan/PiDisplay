@@ -1,0 +1,58 @@
+[gd_scene load_steps=3 format=3 uid="uid://b18u6m4weteke"]
+
+[ext_resource type="Script" path="res://radar_display.gd" id="1_0gjn7"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7n66n"]
+
+[node name="RadarDisplay" type="Node2D"]
+script = ExtResource("1_0gjn7")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+clip_contents = true
+offset_right = 100.0
+offset_bottom = 92.0
+scale = Vector2(0.98, 0.98)
+autoplay = true
+expand = true
+loop = true
+
+[node name="OpenButton" type="Button" parent="VideoStreamPlayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7n66n")
+flat = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 800.0
+offset_bottom = 482.0
+color = Color(0.0728426, 0.0728426, 0.0728426, 1)
+
+[node name="VideoStreamPlayer2" type="VideoStreamPlayer" parent="CanvasLayer"]
+clip_contents = true
+offset_left = 150.0
+offset_right = 750.0
+offset_bottom = 550.0
+scale = Vector2(0.87, 0.87)
+autoplay = true
+expand = true
+loop = true
+
+[node name="Button" type="Button" parent="CanvasLayer/VideoStreamPlayer2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7n66n")
+flat = true
+
+[connection signal="pressed" from="VideoStreamPlayer/OpenButton" to="." method="_on_open_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/VideoStreamPlayer2/Button" to="." method="_on_button_pressed"]

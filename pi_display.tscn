@@ -1,8 +1,9 @@
-[gd_scene load_steps=14 format=3 uid="uid://g7o5wwn1re6a"]
+[gd_scene load_steps=15 format=3 uid="uid://g7o5wwn1re6a"]
 
 [ext_resource type="Script" path="res://Date.gd" id="1_6w8ij"]
 [ext_resource type="Script" path="res://Time.gd" id="2_qqntg"]
 [ext_resource type="Script" path="res://DelayTimer.gd" id="3_0ig23"]
+[ext_resource type="PackedScene" uid="uid://b18u6m4weteke" path="res://radar_display.tscn" id="3_30qy1"]
 [ext_resource type="PackedScene" uid="uid://bmoq88hih8ug0" path="res://sunrise_sunset.tscn" id="3_57io8"]
 [ext_resource type="Script" path="res://TestButton.gd" id="4_mbjm5"]
 [ext_resource type="PackedScene" uid="uid://54wjryxrfomf" path="res://forecast_day.tscn" id="4_uw6a0"]
@@ -99,6 +100,9 @@ offset_right = 144.0
 offset_bottom = 46.0
 text = "°F"
 label_settings = SubResource("LabelSettings_3ioaa")
+
+[node name="RadarDisplay" parent="TimeDisplay" instance=ExtResource("3_30qy1")]
+position = Vector2(520, 5)
 
 [node name="SunriseSunset" parent="TimeDisplay" instance=ExtResource("3_57io8")]
 position = Vector2(562, 53)

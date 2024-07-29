@@ -32,6 +32,7 @@ text = "Sunrise"
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Sunrise"]
+layout_mode = 0
 offset_left = -4.0
 offset_top = -12.0
 offset_right = -1.0
@@ -84,6 +85,7 @@ text = "Moonrise"
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Moonrise"]
+layout_mode = 0
 offset_left = -4.0
 offset_top = -12.0
 offset_right = -1.0
@@ -110,6 +112,7 @@ text = "Moonset"
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect" type="ColorRect" parent="Moonset"]
+layout_mode = 0
 offset_left = -4.0
 offset_top = -12.0
 offset_right = -1.0

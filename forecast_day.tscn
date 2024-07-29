@@ -12,6 +12,7 @@ offset_bottom = 96.0
 color = Color(0, 0, 0, 0.501961)
 
 [node name="ColorRect3" type="ColorRect" parent="ColorRect"]
+layout_mode = 0
 offset_right = 160.0
 offset_bottom = 22.0
 color = Color(0, 0, 0, 0.501961)
