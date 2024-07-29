@@ -59,10 +59,10 @@ func mil_time_to_12hr(military_time):
 	var min = int(split_time[1])
 	
 	var ampm = "AM"
-	if hour > 12:
-		hour = hour - 12
 	if hour >= 12:
 		ampm = "PM"
+	if hour > 12:
+		hour = hour - 12
 	if hour == 0:
 		hour = 12
 	
