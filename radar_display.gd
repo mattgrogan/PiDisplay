@@ -48,3 +48,8 @@ func update_radar():
 	$CanvasLayer/VideoStreamPlayer2.play()
 	
 	#print_debug($VideoStreamPlayer.stream.get_stream())
+	$Timer.start(300)
+
+
+func _on_timer_timeout():
+	update_radar()

@@ -54,5 +54,8 @@ grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7n66n")
 flat = true
 
+[node name="Timer" type="Timer" parent="."]
+
 [connection signal="pressed" from="VideoStreamPlayer/OpenButton" to="." method="_on_open_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/VideoStreamPlayer2/Button" to="." method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
