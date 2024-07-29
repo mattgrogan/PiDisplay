@@ -1,32 +1,44 @@
 extends Node2D
 
-const url = "https://api.sunrise-sunset.org/json"
-const mylat = "40.7127837"
-const mylng = "-74.0059413"
+const base_url = "https://www.timeanddate.com/scripts/sunmap.php?iso="
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	self._send_http_request()
-	pass # Replace with function body.
-
 
 func _send_http_request():
-	print_debug("sending http request")
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	var header = ["lat: " + mylat, "lng: " + mylng, "date: today", "formatted: 0"]
 
 	http_request.request_completed.connect(_on_request_completed)
-	http_request.request(url, header)
+	var url = base_url + Time.get_datetime_string_from_system(true, false)
+	http_request.request(url)
 	
 func _on_request_completed(result, response_code, headers, body):
-	print_debug("Request completed")
 	if result != HTTPRequest.RESULT_SUCCESS:
 		print_debug("Request Failed: " + str(result) + " " + str(response_code))
-	self._parse_sunrise_sunset(body)
+		
+	var image = Image.new()
+	var error = image.load_jpg_from_buffer(body)
+	if error != OK:
+		push_error("Couldn't load the image.")
+
+	var texture = ImageTexture.create_from_image(image)
+
+	# Display the image in a TextureRect node.
+	$SunlightThumb.texture = texture
+	$CanvasLayer/SunlightMaximized.texture = texture
 	
-func _parse_sunrise_sunset(body):
-	var json = JSON.parse_string(body.get_string_from_utf8())
-	print_debug(json)
-	
-	
+	# Reset the timer
+	$Timer.start(900) # Get a new image after 15m
+
+
+func _on_button_pressed():
+	$CanvasLayer.show()
+
+
+func _on_close_button_pressed():
+	$CanvasLayer.hide()
+
+
+func _on_timer_timeout():
+	self._send_http_request()
