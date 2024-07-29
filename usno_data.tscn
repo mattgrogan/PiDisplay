@@ -1,0 +1,117 @@
+[gd_scene load_steps=2 format=3 uid="uid://br84r55ld6gwv"]
+
+[ext_resource type="Script" path="res://USNO_Data.gd" id="1_5gepg"]
+
+[node name="USNO_Data" type="Node2D"]
+position = Vector2(6, 62)
+script = ExtResource("1_5gepg")
+
+[node name="Sunrise" type="Label" parent="."]
+offset_left = 1.0
+offset_top = -47.0
+offset_right = 63.0
+offset_bottom = -24.0
+text = "5:00 AM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Sunrise"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -17.0
+offset_right = 59.0
+offset_bottom = 6.0
+text = "Sunrise"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Sunrise"]
+offset_left = -4.0
+offset_top = -12.0
+offset_right = -1.0
+offset_bottom = 18.0
+color = Color(1, 0.992157, 0.596078, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Sunset" type="Label" parent="."]
+offset_left = 93.0
+offset_top = -47.0
+offset_right = 154.0
+offset_bottom = -24.0
+text = "8:32 PM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Sunset"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -19.0
+offset_right = 54.0
+offset_bottom = 4.0
+text = "Sunset"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Sunset"]
+layout_mode = 0
+offset_left = -4.0
+offset_top = -12.0
+offset_right = -1.0
+offset_bottom = 18.0
+color = Color(0.360784, 0.501961, 0.737255, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Moonrise" type="Label" parent="."]
+offset_left = 1.0
+offset_top = 25.0
+offset_right = 63.0
+offset_bottom = 48.0
+text = "5:00 AM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Moonrise"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -17.0
+offset_right = 59.0
+offset_bottom = 6.0
+theme_override_font_sizes/font_size = 15
+text = "Moonrise"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Moonrise"]
+offset_left = -4.0
+offset_top = -12.0
+offset_right = -1.0
+offset_bottom = 18.0
+color = Color(0.905882, 0.905882, 0.905882, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Moonset" type="Label" parent="."]
+offset_left = 93.0
+offset_top = 25.0
+offset_right = 155.0
+offset_bottom = 48.0
+text = "5:00 AM"
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Moonset"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = -17.0
+offset_right = 59.0
+offset_bottom = 6.0
+theme_override_font_sizes/font_size = 15
+text = "Moonset"
+metadata/_edit_use_anchors_ = true
+
+[node name="ColorRect" type="ColorRect" parent="Moonset"]
+offset_left = -4.0
+offset_top = -12.0
+offset_right = -1.0
+offset_bottom = 18.0
+color = Color(0.905882, 0.905882, 0.905882, 1)
+metadata/_edit_use_anchors_ = true
+
+[node name="Moonphase" type="Label" parent="."]
+offset_left = -3.0
+offset_top = -11.0
+offset_right = 162.0
+offset_bottom = 12.0
+text = "Waxing Crescent 33%"

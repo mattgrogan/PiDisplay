@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://g7o5wwn1re6a"]
+[gd_scene load_steps=14 format=3 uid="uid://g7o5wwn1re6a"]
 
 [ext_resource type="Script" path="res://Date.gd" id="1_6w8ij"]
 [ext_resource type="Script" path="res://Time.gd" id="2_qqntg"]
@@ -9,17 +9,9 @@
 [ext_resource type="Script" path="res://ForecastTimer.gd" id="5_1ordo"]
 [ext_resource type="Script" path="res://BackgroundTimer.gd" id="7_la43m"]
 
-[sub_resource type="SystemFont" id="SystemFont_i5y02"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_bc13e"]
-font = SubResource("SystemFont_i5y02")
-font_size = 60
-
-[sub_resource type="SystemFont" id="SystemFont_ncmdv"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_sg3pd"]
-font = SubResource("SystemFont_ncmdv")
-font_size = 96
+[sub_resource type="FontVariation" id="FontVariation_dqk7m"]
+spacing_top = -10
+spacing_bottom = -10
 
 [sub_resource type="SystemFont" id="SystemFont_dsuyu"]
 
@@ -57,30 +49,44 @@ offset_bottom = 99.0
 color = Color(0, 0, 0, 0.407843)
 
 [node name="Date" type="Label" parent="TimeDisplay"]
-offset_left = 22.0
-offset_top = 7.0
-offset_right = 773.0
-offset_bottom = 90.0
-size_flags_horizontal = 0
-text = "Monday January 1"
-label_settings = SubResource("LabelSettings_bc13e")
+offset_left = 303.0
+offset_top = 13.0
+offset_right = 1054.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(1, 0.992157, 0.596078, 1)
+theme_override_fonts/font = SubResource("FontVariation_dqk7m")
+theme_override_font_sizes/font_size = 37
+text = "Monday 
+January 1"
+uppercase = true
 script = ExtResource("1_6w8ij")
 
 [node name="Time" type="Label" parent="TimeDisplay"]
-offset_left = 3.0
-offset_top = 76.0
-offset_right = 636.0
-offset_bottom = 208.0
-text = "10:01 AM"
-label_settings = SubResource("LabelSettings_sg3pd")
+offset_left = 1.0
+offset_top = -19.0
+offset_right = 260.0
+offset_bottom = 113.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 96
+text = "10:01"
 script = ExtResource("2_qqntg")
+
+[node name="ampm" type="Label" parent="TimeDisplay/Time"]
+layout_mode = 0
+offset_left = 245.0
+offset_top = 26.0
+offset_right = 285.0
+offset_bottom = 60.0
+theme_override_colors/font_color = Color(0.481789, 0.481789, 0.481789, 1)
+theme_override_font_sizes/font_size = 24
+text = "AM"
 
 [node name="Temp" type="Label" parent="TimeDisplay"]
 unique_name_in_owner = true
-offset_left = 644.0
-offset_top = 1.0
-offset_right = 738.0
-offset_bottom = 89.0
+offset_left = 660.0
+offset_top = 6.0
+offset_right = 754.0
+offset_bottom = 94.0
 text = "32"
 label_settings = SubResource("LabelSettings_jibpm")
 horizontal_alignment = 2

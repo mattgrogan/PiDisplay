@@ -48,4 +48,4 @@ func _process(delta):
 		Time.Month.MONTH_DECEMBER:
 			month = "December"
 						
-	self.text = "%s, %s %d" % [day_of_week, month, date.day]
+	self.text = "%s\n%s %d" % [day_of_week, month, date.day]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bmoq88hih8ug0"]
+[gd_scene load_steps=5 format=3 uid="uid://bmoq88hih8ug0"]
 
 [ext_resource type="Script" path="res://SunriseSunset.gd" id="1_tfgvx"]
+[ext_resource type="PackedScene" uid="uid://br84r55ld6gwv" path="res://usno_data.tscn" id="2_ys010"]
 
 [sub_resource type="PlaceholderMesh" id="PlaceholderMesh_jdon3"]
 
@@ -9,6 +10,9 @@ mesh = SubResource("PlaceholderMesh_jdon3")
 
 [node name="SunriseSunset" type="Node2D"]
 script = ExtResource("1_tfgvx")
+
+[node name="USNO_Data" parent="." instance=ExtResource("2_ys010")]
+position = Vector2(97, 223)
 
 [node name="Timer" type="Timer" parent="."]
 
@@ -42,7 +46,7 @@ offset_bottom = 489.0
 color = Color(0, 0, 0, 1)
 
 [node name="SunlightMaximized" type="TextureRect" parent="CanvasLayer"]
-anchors_preset = -1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 1.0

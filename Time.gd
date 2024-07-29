@@ -15,5 +15,6 @@ func _process(delta):
 		ampm = "PM"
 	if hour > 12:
 		hour = hour - 12
-	self.text = "%d:%02d %s" % [hour, time.minute, ampm]
+	self.text = "%d:%02d" % [hour, time.minute]
+	$ampm.text = ampm
 	
