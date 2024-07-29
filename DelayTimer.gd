@@ -16,8 +16,10 @@ func _process(delta):
 	
 func _on_timeout():
 	print_debug("timer called")
-	$HTTPRequest.request_completed.connect(_on_request_completed)
-	$HTTPRequest.request(url, [header])
+	var http_request = HTTPRequest.new()
+	add_child(http_request)
+	http_request.request_completed.connect(_on_request_completed)
+	http_request.request(url, [header])
 	self.start()
 	print_debug("started")
 	print_debug(self.time_left)
