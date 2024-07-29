@@ -27,6 +27,7 @@ func _send_http_request():
 	
 func _on_request_completed(result, response_code, headers, body):
 	var json = JSON.parse_string(body.get_string_from_utf8())
+	$Timer.start(3600) # Restart every hour
 	parse_usno_oneday(json)
 	
 func parse_usno_oneday(json):
@@ -58,12 +59,12 @@ func mil_time_to_12hr(military_time):
 	var min = int(split_time[1])
 	
 	var ampm = "AM"
-	if hour == 0:
-		hour = 12
 	if hour > 12:
 		hour = hour - 12
 	if hour >= 12:
 		ampm = "PM"
+	if hour == 0:
+		hour = 12
 	
 	return "%d:%d %s" % [hour, min, ampm]
 	
@@ -73,3 +74,7 @@ func _update_fields(moon_phase, moon_frac, moonrise, moonset, sunrise, sunset):
 	$Moonrise.text = mil_time_to_12hr(moonrise)
 	$Moonset.text = mil_time_to_12hr(moonset)
 	$Moonphase.text = moon_phase + " (" + moon_frac + ")"
+
+
+func _on_timer_timeout():
+	_send_http_request()

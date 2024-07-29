@@ -3,8 +3,16 @@
 [ext_resource type="Script" path="res://USNO_Data.gd" id="1_5gepg"]
 
 [node name="USNO_Data" type="Node2D"]
-position = Vector2(6, 62)
+position = Vector2(12, 62)
 script = ExtResource("1_5gepg")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+offset_left = -6.0
+offset_top = -62.0
+offset_right = 167.0
+offset_bottom = 52.0
+color = Color(0, 0, 0, 0.384314)
 
 [node name="Sunrise" type="Label" parent="."]
 offset_left = 1.0
@@ -115,3 +123,9 @@ offset_top = -11.0
 offset_right = 162.0
 offset_bottom = 12.0
 text = "Waxing Crescent 33%"
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 21600.0
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

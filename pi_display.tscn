@@ -101,17 +101,15 @@ text = "°F"
 label_settings = SubResource("LabelSettings_3ioaa")
 
 [node name="SunriseSunset" parent="TimeDisplay" instance=ExtResource("3_57io8")]
-position = Vector2(559, 58)
+position = Vector2(562, 53)
 scale = Vector2(0.83, 0.83)
 
 [node name="TestButton" type="Button" parent="TimeDisplay"]
-offset_left = 32.0
-offset_top = 201.0
-offset_right = 169.0
-offset_bottom = 357.0
-text = "
-test 
-button"
+offset_left = 641.0
+offset_top = 338.0
+offset_right = 800.0
+offset_bottom = 384.0
+text = "Close"
 script = ExtResource("4_mbjm5")
 
 [node name="HUD" type="CanvasLayer" parent="TimeDisplay"]
