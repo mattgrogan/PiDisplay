@@ -116,7 +116,7 @@ scale = Vector2(0.83, 0.83)
 
 [node name="TestButton" type="Button" parent="TimeDisplay"]
 offset_top = 100.0
-offset_right = 159.0
+offset_right = 59.0
 offset_bottom = 146.0
 text = "Close"
 script = ExtResource("4_mbjm5")
@@ -160,6 +160,7 @@ script = ExtResource("5_1ordo")
 [node name="HTTPRequest" type="HTTPRequest" parent="Connectors/ForecastTimer"]
 
 [node name="BackgroundTimer" type="Timer" parent="Connectors"]
+one_shot = true
 script = ExtResource("7_la43m")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Connectors/BackgroundTimer"]

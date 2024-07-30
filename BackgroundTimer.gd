@@ -3,27 +3,16 @@ extends Timer
 const host = "https://www.bing.com"
 const url = host + "/" + "HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-US"
 
-# const header = "accept: application/geo+json"
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# Run the timeout immediately
 	self._on_timeout()
 
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
 func _on_timeout():
 	print_debug("Background Timer Called")
 	print_debug("connecting to " + url)
 	$HTTPRequest.request_completed.connect(_on_request_completed)
 	$HTTPRequest.request(url)
-	self.start()
-	print_debug("Background Timer Restarted")
-	print_debug(self.time_left)
 
 func _on_request_completed(result, response_code, headers, body):
 	print_debug("PARSING")
@@ -44,18 +33,6 @@ func _on_request_completed(result, response_code, headers, body):
 	print_debug("The image URL is: " + host + image_url)
 	self.download_image(host + image_url)
 			
-
-	
-	#var json = JSON.parse_string(body.get_string_from_utf8())
-	#
-	#self._update_forecast(json, 0, "%ForecastPeriod0")
-	#self._update_forecast(json, 1, "%ForecastPeriod1")
-	#self._update_forecast(json, 2, "%ForecastPeriod2")
-	#self._update_forecast(json, 3, "%ForecastPeriod3")
-	#self._update_forecast(json, 4, "%ForecastPeriod4")
-	#
-	#self.download_image(json["data"]["iconLink"][0])
-
 func _update_forecast(json, index, node):
 	var period =(json["time"]["startPeriodName"][index])
 	var temp = json["data"]["temperature"][index]
@@ -91,3 +68,7 @@ func _http_request_completed(result, response_code, headers, body):
 
 	# Display the image in a TextureRect node.
 	get_node("%BackgroundTexture").texture = texture
+
+	self.start(600)
+	print_debug("Background Timer Restarted")
+	print_debug(self.time_left)
