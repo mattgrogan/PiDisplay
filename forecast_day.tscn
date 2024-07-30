@@ -85,27 +85,27 @@ offset_bottom = 480.0
 color = Color(0.262745, 0.262745, 0.262745, 1)
 
 [node name="WeatherIcon" type="TextureRect" parent="ForecastDetailWindow"]
-custom_minimum_size = Vector2(86, 86)
-offset_left = 65.0
-offset_top = 94.0
-offset_right = 151.0
-offset_bottom = 180.0
+custom_minimum_size = Vector2(172, 172)
+offset_left = 2.0
+offset_right = 174.0
+offset_bottom = 172.0
+expand_mode = 3
 
 [node name="Period" type="Label" parent="ForecastDetailWindow"]
-offset_left = 61.0
-offset_top = 44.0
-offset_right = 295.0
-offset_bottom = 94.0
+offset_left = 188.0
+offset_top = 17.0
+offset_right = 422.0
+offset_bottom = 67.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "TONIGHT"
 uppercase = true
 
 [node name="Temp" type="Label" parent="ForecastDetailWindow"]
-offset_left = 527.0
-offset_top = 46.0
-offset_right = 613.0
-offset_bottom = 96.0
+offset_left = 498.0
+offset_top = 18.0
+offset_right = 584.0
+offset_bottom = 68.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "32"
@@ -113,10 +113,10 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="TempLabel" type="Label" parent="ForecastDetailWindow"]
-offset_left = 425.0
-offset_top = 51.0
-offset_right = 530.0
-offset_bottom = 91.0
+offset_left = 413.0
+offset_top = 24.0
+offset_right = 518.0
+offset_bottom = 64.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "High"
@@ -125,10 +125,10 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="Forecast" type="Label" parent="ForecastDetailWindow"]
-offset_left = 184.0
-offset_top = 104.0
-offset_right = 661.0
-offset_bottom = 191.0
+offset_left = 188.0
+offset_top = 62.0
+offset_right = 665.0
+offset_bottom = 149.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 28
 text = "Mostly Clear"
