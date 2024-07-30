@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://g7o5wwn1re6a"]
+[gd_scene load_steps=16 format=3 uid="uid://g7o5wwn1re6a"]
 
 [ext_resource type="Script" path="res://Date.gd" id="1_6w8ij"]
 [ext_resource type="Script" path="res://Time.gd" id="2_qqntg"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://TestButton.gd" id="4_mbjm5"]
 [ext_resource type="PackedScene" uid="uid://54wjryxrfomf" path="res://forecast_day.tscn" id="4_uw6a0"]
 [ext_resource type="Script" path="res://ForecastTimer.gd" id="5_1ordo"]
+[ext_resource type="PackedScene" uid="uid://1a1tfikj02ec" path="res://tides.tscn" id="5_3qk4p"]
 [ext_resource type="Script" path="res://BackgroundTimer.gd" id="7_la43m"]
 
 [sub_resource type="FontVariation" id="FontVariation_dqk7m"]
@@ -54,7 +55,7 @@ offset_left = 303.0
 offset_top = 13.0
 offset_right = 1054.0
 offset_bottom = 106.0
-theme_override_colors/font_color = Color(1, 0.992157, 0.596078, 1)
+theme_override_colors/font_color = Color(0.898039, 0.92549, 0.956863, 1)
 theme_override_fonts/font = SubResource("FontVariation_dqk7m")
 theme_override_font_sizes/font_size = 37
 text = "Monday 
@@ -63,20 +64,21 @@ uppercase = true
 script = ExtResource("1_6w8ij")
 
 [node name="Time" type="Label" parent="TimeDisplay"]
-offset_left = 1.0
+offset_left = -11.0
 offset_top = -19.0
-offset_right = 260.0
+offset_right = 248.0
 offset_bottom = 113.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 96
 text = "10:01"
+horizontal_alignment = 2
 script = ExtResource("2_qqntg")
 
 [node name="ampm" type="Label" parent="TimeDisplay/Time"]
-layout_mode = 0
-offset_left = 245.0
+layout_mode = 1
+offset_left = 260.0
 offset_top = 26.0
-offset_right = 285.0
+offset_right = 300.0
 offset_bottom = 60.0
 theme_override_colors/font_color = Color(0.481789, 0.481789, 0.481789, 1)
 theme_override_font_sizes/font_size = 24
@@ -108,11 +110,14 @@ position = Vector2(520, 5)
 position = Vector2(562, 53)
 scale = Vector2(0.83, 0.83)
 
+[node name="Tides" parent="TimeDisplay" instance=ExtResource("5_3qk4p")]
+position = Vector2(562, 233)
+scale = Vector2(0.83, 0.83)
+
 [node name="TestButton" type="Button" parent="TimeDisplay"]
-offset_left = 641.0
-offset_top = 338.0
-offset_right = 800.0
-offset_bottom = 384.0
+offset_top = 100.0
+offset_right = 159.0
+offset_bottom = 146.0
 text = "Close"
 script = ExtResource("4_mbjm5")
 
