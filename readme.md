@@ -4,6 +4,7 @@ A custom information screen written in Godot to show:
 
 - Date
 - Time
+- Background of the day (bing.com)
 - Current temperature (weather.gov)
 - Current precipitation radar animation (weather.gov)
 - Five period forecast with expandable detail (weather.gov)
