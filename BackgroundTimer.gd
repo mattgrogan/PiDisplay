@@ -1,5 +1,7 @@
 extends Timer
 
+const THREE_HOURS = 3 * 60 * 60
+
 const host = "https://www.bing.com"
 const url = host + "/" + "HPImageArchive.aspx?format=xml&idx=0&n=1&mkt=en-US"
 
@@ -69,6 +71,6 @@ func _http_request_completed(result, response_code, headers, body):
 	# Display the image in a TextureRect node.
 	get_node("%BackgroundTexture").texture = texture
 
-	self.start(600)
+	self.start(THREE_HOURS)
 	print_debug("Background Timer Restarted")
 	print_debug(self.time_left)
