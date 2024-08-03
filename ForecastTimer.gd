@@ -1,5 +1,7 @@
 extends Timer
 
+const HALF_HOUR = 30 * 60
+
 const url = "https://forecast.weather.gov/MapClick.php?lat=40.73443&lon=-73.41639&FcstType=json"
 # const header = "accept: application/geo+json"
 
@@ -33,7 +35,7 @@ func _update_forecast(json, index, node):
 	
 	get_node(node).update(period, temp, temp_label, weather, detail, icon_url)
 
-	self.start(600)
+	self.start(HALF_HOUR)
 	
 #func download_image(url):
 	## Create an HTTP request node and connect its completion signal.

@@ -58,7 +58,7 @@ offset_bottom = 106.0
 theme_override_colors/font_color = Color(0.898039, 0.92549, 0.956863, 1)
 theme_override_fonts/font = SubResource("FontVariation_dqk7m")
 theme_override_font_sizes/font_size = 37
-text = "Monday 
+text = "Wednesday 
 January 1"
 uppercase = true
 script = ExtResource("1_6w8ij")
@@ -104,7 +104,7 @@ text = "°F"
 label_settings = SubResource("LabelSettings_3ioaa")
 
 [node name="RadarDisplay" parent="TimeDisplay" instance=ExtResource("3_30qy1")]
-position = Vector2(520, 5)
+position = Vector2(552, 12)
 
 [node name="SunriseSunset" parent="TimeDisplay" instance=ExtResource("3_57io8")]
 position = Vector2(562, 53)
@@ -167,3 +167,5 @@ script = ExtResource("7_la43m")
 
 [connection signal="pressed" from="TimeDisplay/TestButton" to="TimeDisplay/TestButton" method="_on_pressed"]
 [connection signal="timeout" from="Connectors/TempTimer" to="Connectors/TempTimer" method="_on_timeout"]
+[connection signal="timeout" from="Connectors/ForecastTimer" to="Connectors/ForecastTimer" method="_on_timeout"]
+[connection signal="timeout" from="Connectors/BackgroundTimer" to="Connectors/BackgroundTimer" method="_on_timeout"]
