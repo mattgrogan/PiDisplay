@@ -22,13 +22,32 @@ func _send_http_request():
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
 
-	http_request.request_completed.connect(_on_request_completed)
-	http_request.request(build_url())
+	http_request.request_completed.connect(_on_request_completed.bind(http_request))
+	var error = http_request.request(build_url())
+	if error != OK:
+		push_error("Failed to start HTTP request")
+		http_request.queue_free()
 	
-func _on_request_completed(result, response_code, headers, body):
+func _on_request_completed(result, response_code, _headers, body, http_request):
+	if result != HTTPRequest.RESULT_SUCCESS:
+		push_error("Request failed: " + str(result) + " " + str(response_code))
+		http_request.queue_free()
+		$Timer.start(3600)  # Try again later
+		return
+
 	var json = JSON.parse_string(body.get_string_from_utf8())
-	$Timer.start(3600) # Restart every hour
+	if json == null:
+		push_error("Failed to parse JSON")
+		http_request.queue_free()
+		$Timer.start(3600)
+		return
+
 	parse_usno_oneday(json)
+
+	# Clean up the HTTPRequest node
+	http_request.queue_free()
+
+	$Timer.start(3600) # Restart every hour
 	
 func parse_usno_oneday(json):
 	var moon_phase = json["properties"]["data"]["curphase"]

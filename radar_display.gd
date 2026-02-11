@@ -25,18 +25,20 @@ func update_radar():
 
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.request_completed.connect(_on_radar_download_completed)
+	http_request.request_completed.connect(_on_radar_download_completed.bind(http_request))
 
 	var err = http_request.request(url)
 	if err != OK:
 		push_error("Failed to start radar download request")
+		http_request.queue_free()
 		$Timer.start(300)  # Try again later
 
-func _on_radar_download_completed(result, response_code, headers, body):
+func _on_radar_download_completed(result, response_code, _headers, body, http_request):
 	print_debug("Radar download completed")
 
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_error("Radar download failed: " + str(result) + " " + str(response_code))
+		http_request.queue_free()
 		$Timer.start(300)  # Try again later
 		return
 
@@ -44,6 +46,7 @@ func _on_radar_download_completed(result, response_code, headers, body):
 	var file = FileAccess.open("user://KOKX_loop.gif", FileAccess.WRITE)
 	if file == null:
 		push_error("Failed to open file for writing")
+		http_request.queue_free()
 		$Timer.start(300)
 		return
 
@@ -88,6 +91,9 @@ func _on_radar_download_completed(result, response_code, headers, body):
 	$VideoStreamPlayer.play()
 	$CanvasLayer/VideoStreamPlayer2.stream = stream
 	$CanvasLayer/VideoStreamPlayer2.play()
+
+	# Clean up the HTTPRequest node
+	http_request.queue_free()
 
 	# Restart the timer for next update
 	$Timer.start(300)

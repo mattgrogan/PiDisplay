@@ -13,12 +13,16 @@ func _ready():
 func _on_timeout():
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.request_completed.connect(_on_request_completed)
-	http_request.request(url)
+	http_request.request_completed.connect(_on_request_completed.bind(http_request))
+	var error = http_request.request(url)
+	if error != OK:
+		push_error("Failed to start HTTP request")
+		http_request.queue_free()
 
-func _on_request_completed(result, response_code, headers, body):
+func _on_request_completed(result, response_code, _headers, body, http_request):
 	if result != HTTPRequest.RESULT_SUCCESS:
 		print_debug("Forecast request failed: " + str(result) + " " + str(response_code))
+		http_request.queue_free()
 		self.start(HALF_HOUR)  # Try again later
 		return
 
@@ -26,6 +30,7 @@ func _on_request_completed(result, response_code, headers, body):
 
 	if json == null:
 		print_debug("Failed to parse forecast JSON")
+		http_request.queue_free()
 		self.start(HALF_HOUR)
 		return
 
@@ -34,6 +39,9 @@ func _on_request_completed(result, response_code, headers, body):
 	self._update_forecast(json, 2, "%ForecastPeriod2")
 	self._update_forecast(json, 3, "%ForecastPeriod3")
 	self._update_forecast(json, 4, "%ForecastPeriod4")
+
+	# Clean up the HTTPRequest node
+	http_request.queue_free()
 
 	# Restart timer after all updates are complete
 	self.start(HALF_HOUR)

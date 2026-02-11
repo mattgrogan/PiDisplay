@@ -13,7 +13,9 @@ func _ready():
 func _on_timeout():
 	print_debug("Background Timer Called")
 	print_debug("connecting to " + url)
-	$HTTPRequest.request_completed.connect(_on_request_completed)
+	# Only connect the signal once
+	if not $HTTPRequest.request_completed.is_connected(_on_request_completed):
+		$HTTPRequest.request_completed.connect(_on_request_completed)
 	$HTTPRequest.request(url)
 
 func _on_request_completed(result, response_code, headers, body):
@@ -48,28 +50,38 @@ func download_image(url):
 	# Create an HTTP request node and connect its completion signal.
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.request_completed.connect(self._http_request_completed)
+	http_request.request_completed.connect(self._http_request_completed.bind(http_request))
 
 	# Perform the HTTP request. The URL below returns a PNG image as of writing.
 	var error = http_request.request(url)
 	if error != OK:
 		push_error("An error occurred in the HTTP request.")
+		http_request.queue_free()  # Clean up if request fails
 
 # Called when the HTTP request is completed.
-func _http_request_completed(result, response_code, headers, body):
+func _http_request_completed(result, _response_code, _headers, body, http_request):
 	print_debug("Downloaded image")
 	if result != HTTPRequest.RESULT_SUCCESS:
 		push_error("Image couldn't be downloaded. Try a different image.")
+		http_request.queue_free()  # Clean up the HTTPRequest node
+		self.start(THREE_HOURS)
+		return
 
 	var image = Image.new()
 	var error = image.load_jpg_from_buffer(body)
 	if error != OK:
 		push_error("Couldn't load the image.")
+		http_request.queue_free()  # Clean up the HTTPRequest node
+		self.start(THREE_HOURS)
+		return
 
 	var texture = ImageTexture.create_from_image(image)
 
 	# Display the image in a TextureRect node.
 	get_node("%BackgroundTexture").texture = texture
+
+	# Clean up the HTTPRequest node
+	http_request.queue_free()
 
 	self.start(THREE_HOURS)
 	print_debug("Background Timer Restarted")

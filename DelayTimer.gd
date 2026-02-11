@@ -18,17 +18,28 @@ func _on_timeout():
 	print_debug("timer called")
 	var http_request = HTTPRequest.new()
 	add_child(http_request)
-	http_request.request_completed.connect(_on_request_completed)
-	http_request.request(url, [header])
+	http_request.request_completed.connect(_on_request_completed.bind(http_request))
+	var error = http_request.request(url, [header])
+	if error != OK:
+		push_error("Failed to start HTTP request")
+		http_request.queue_free()
 	self.start()
 	print_debug("started")
 	print_debug(self.time_left)
 
-func _on_request_completed(result, response_code, headers, body):
+func _on_request_completed(result, _response_code, _headers, body, http_request):
+	if result != HTTPRequest.RESULT_SUCCESS:
+		push_error("Request failed: " + str(result))
+		http_request.queue_free()
+		return
+
 	var json = JSON.parse_string(body.get_string_from_utf8())
 	var temp_c = float(json["properties"]["temperature"]["value"])
 	var temp_f = (temp_c * 9.0 / 5.0) + 32
-	
+
 	var temp_label = get_node("%Temp")
 	temp_label.text = "%d" % temp_f
 	print(temp_f)
+
+	# Clean up the HTTPRequest node
+	http_request.queue_free()
