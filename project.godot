@@ -23,6 +23,11 @@ window/size/viewport_width=800
 window/size/viewport_height=480
 window/stretch/mode="canvas_items"
 
+[audio]
+
+driver/enable_input=true
+driver/output_latency=15
+
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true

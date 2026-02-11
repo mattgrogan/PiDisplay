@@ -108,6 +108,9 @@ func _process(delta):
 	if alert_playing:
 		alert_beep_timer -= delta
 		if alert_beep_timer <= 0 and alert_beeps_remaining > 0:
+			print_debug("Playing alert sound. Beeps remaining: " + str(alert_beeps_remaining))
+			print_debug("AudioStreamPlayer stream: " + str($TimerOverlay/AlertSound.stream))
+			print_debug("AudioStreamPlayer volume_db: " + str($TimerOverlay/AlertSound.volume_db))
 			$TimerOverlay/AlertSound.play()
 			alert_beeps_remaining -= 1
 			alert_beep_timer = 5.0  # 5 seconds between beeps
