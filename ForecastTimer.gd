@@ -17,25 +17,41 @@ func _on_timeout():
 	http_request.request(url)
 
 func _on_request_completed(result, response_code, headers, body):
+	if result != HTTPRequest.RESULT_SUCCESS:
+		print_debug("Forecast request failed: " + str(result) + " " + str(response_code))
+		self.start(HALF_HOUR)  # Try again later
+		return
+
 	var json = JSON.parse_string(body.get_string_from_utf8())
-	
+
+	if json == null:
+		print_debug("Failed to parse forecast JSON")
+		self.start(HALF_HOUR)
+		return
+
 	self._update_forecast(json, 0, "%ForecastPeriod0")
 	self._update_forecast(json, 1, "%ForecastPeriod1")
 	self._update_forecast(json, 2, "%ForecastPeriod2")
 	self._update_forecast(json, 3, "%ForecastPeriod3")
 	self._update_forecast(json, 4, "%ForecastPeriod4")
-	
+
+	# Restart timer after all updates are complete
+	self.start(HALF_HOUR)
+
 func _update_forecast(json, index, node):
+	var forecast_node = get_node_or_null(node)
+	if forecast_node == null:
+		print_debug("Forecast node not found: " + node)
+		return
+
 	var period =(json["time"]["startPeriodName"][index])
 	var temp = json["data"]["temperature"][index]
 	var temp_label = json["time"]["tempLabel"][index]
 	var weather = json["data"]["weather"][index]
 	var detail = json["data"]["text"][index]
 	var icon_url = json["data"]["iconLink"][index]
-	
-	get_node(node).update(period, temp, temp_label, weather, detail, icon_url)
 
-	self.start(HALF_HOUR)
+	forecast_node.update(period, temp, temp_label, weather, detail, icon_url)
 	
 #func download_image(url):
 	## Create an HTTP request node and connect its completion signal.

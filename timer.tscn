@@ -1,0 +1,284 @@
+[gd_scene load_steps=4 format=3 uid="uid://dv7ragrj4s6r5"]
+
+[ext_resource type="Script" path="res://timer.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://dp140ebesjccp" path="res://audio/denielcz-done-463074.mp3" id="2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_empty"]
+
+[node name="Timer" type="Node2D"]
+script = ExtResource("1")
+
+[node name="TimerButton" type="Button" parent="."]
+offset_left = 60.0
+offset_top = 100.0
+offset_right = 119.0
+offset_bottom = 146.0
+text = "Timer"
+
+[node name="MainScreenDisplay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 25.0
+offset_top = 165.0
+offset_right = 576.0
+offset_bottom = 354.0
+
+[node name="Background" type="ColorRect" parent="MainScreenDisplay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.073, 0.073, 0.073, 0.7)
+
+[node name="AlertFlash" type="ColorRect" parent="MainScreenDisplay"]
+modulate = Color(0.9, 0.1, 0.1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.9, 0.1, 0.1, 1)
+
+[node name="TimerLabel" type="Label" parent="MainScreenDisplay"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -40.0
+offset_right = 150.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 90
+text = "00:00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CancelButton" type="Button" parent="MainScreenDisplay"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 40.0
+grow_horizontal = 0
+text = "X"
+
+[node name="OpenButton" type="Button" parent="MainScreenDisplay"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.456
+anchor_bottom = 1.085
+offset_right = -237.856
+offset_bottom = -11.79
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_empty")
+flat = true
+
+[node name="TimerOverlay" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="Background" type="ColorRect" parent="TimerOverlay"]
+offset_right = 800.0
+offset_bottom = 480.0
+mouse_filter = 2
+color = Color(0.073, 0.073, 0.073, 1)
+
+[node name="CloseButton" type="Button" parent="TimerOverlay"]
+offset_left = 720.0
+offset_top = 10.0
+offset_right = 790.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 24
+text = "X"
+
+[node name="TimeDisplay" type="Label" parent="TimerOverlay"]
+offset_left = 250.0
+offset_top = 50.0
+offset_right = 550.0
+offset_bottom = 150.0
+theme_override_font_sizes/font_size = 96
+text = "00:00:00"
+horizontal_alignment = 1
+
+[node name="PresetContainer" type="HBoxContainer" parent="TimerOverlay"]
+offset_left = 100.0
+offset_top = 160.0
+offset_right = 700.0
+offset_bottom = 210.0
+theme_override_constants/separation = 10
+
+[node name="Preset1m" type="Button" parent="TimerOverlay/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.204, 0.594, 0.988, 1)
+text = "1m"
+
+[node name="Preset5m" type="Button" parent="TimerOverlay/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.204, 0.594, 0.988, 1)
+text = "5m"
+
+[node name="Preset10m" type="Button" parent="TimerOverlay/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.204, 0.594, 0.988, 1)
+text = "10m"
+
+[node name="Preset20m" type="Button" parent="TimerOverlay/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.204, 0.594, 0.988, 1)
+text = "20m"
+
+[node name="Preset25m" type="Button" parent="TimerOverlay/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.204, 0.594, 0.988, 1)
+text = "25m"
+
+[node name="Preset30m" type="Button" parent="TimerOverlay/PresetContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.204, 0.594, 0.988, 1)
+text = "30m"
+
+[node name="TimePickerContainer" type="HBoxContainer" parent="TimerOverlay"]
+offset_left = 200.0
+offset_top = 220.0
+offset_right = 600.0
+offset_bottom = 380.0
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="HoursGroup" type="VBoxContainer" parent="TimerOverlay/TimePickerContainer"]
+custom_minimum_size = Vector2(100, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="HoursUpButton" type="Button" parent="TimerOverlay/TimePickerContainer/HoursGroup"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "+"
+
+[node name="HoursLabel" type="Label" parent="TimerOverlay/TimePickerContainer/HoursGroup"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HoursDownButton" type="Button" parent="TimerOverlay/TimePickerContainer/HoursGroup"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "-"
+
+[node name="ColonLabel1" type="Label" parent="TimerOverlay/TimePickerContainer"]
+custom_minimum_size = Vector2(20, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = ":"
+vertical_alignment = 1
+
+[node name="MinutesGroup" type="VBoxContainer" parent="TimerOverlay/TimePickerContainer"]
+custom_minimum_size = Vector2(100, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="MinutesUpButton" type="Button" parent="TimerOverlay/TimePickerContainer/MinutesGroup"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "+"
+
+[node name="MinutesLabel" type="Label" parent="TimerOverlay/TimePickerContainer/MinutesGroup"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MinutesDownButton" type="Button" parent="TimerOverlay/TimePickerContainer/MinutesGroup"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "-"
+
+[node name="ColonLabel2" type="Label" parent="TimerOverlay/TimePickerContainer"]
+custom_minimum_size = Vector2(20, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = ":"
+vertical_alignment = 1
+
+[node name="SecondsGroup" type="VBoxContainer" parent="TimerOverlay/TimePickerContainer"]
+custom_minimum_size = Vector2(100, 160)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="SecondsUpButton" type="Button" parent="TimerOverlay/TimePickerContainer/SecondsGroup"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "+"
+
+[node name="SecondsLabel" type="Label" parent="TimerOverlay/TimePickerContainer/SecondsGroup"]
+custom_minimum_size = Vector2(100, 60)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SecondsDownButton" type="Button" parent="TimerOverlay/TimePickerContainer/SecondsGroup"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "-"
+
+[node name="ControlContainer" type="HBoxContainer" parent="TimerOverlay"]
+offset_left = 250.0
+offset_top = 390.0
+offset_right = 550.0
+offset_bottom = 450.0
+theme_override_constants/separation = 10
+
+[node name="StartButton" type="Button" parent="TimerOverlay/ControlContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "START"
+
+[node name="ResetButton" type="Button" parent="TimerOverlay/ControlContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "RESET"
+
+[node name="CountdownTimer" type="Timer" parent="TimerOverlay"]
+
+[node name="AlertFlash" type="ColorRect" parent="TimerOverlay"]
+modulate = Color(0.9, 0.1, 0.1, 0)
+offset_right = 800.0
+offset_bottom = 480.0
+mouse_filter = 2
+color = Color(0.9, 0.1, 0.1, 1)
+
+[node name="AlertSound" type="AudioStreamPlayer" parent="TimerOverlay"]
+stream = ExtResource("2")

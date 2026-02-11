@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://g7o5wwn1re6a"]
+[gd_scene load_steps=18 format=3 uid="uid://g7o5wwn1re6a"]
 
 [ext_resource type="Script" path="res://Date.gd" id="1_6w8ij"]
 [ext_resource type="Script" path="res://Time.gd" id="2_qqntg"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://ForecastTimer.gd" id="5_1ordo"]
 [ext_resource type="PackedScene" uid="uid://1a1tfikj02ec" path="res://tides.tscn" id="5_3qk4p"]
 [ext_resource type="Script" path="res://BackgroundTimer.gd" id="7_la43m"]
+[ext_resource type="PackedScene" uid="uid://dv7ragrj4s6r5" path="res://timer.tscn" id="8_timer"]
 [ext_resource type="Script" path="res://Main.gd" id="11_main_script"]
 
 [sub_resource type="FontVariation" id="FontVariation_dqk7m"]
@@ -122,6 +123,8 @@ offset_right = 59.0
 offset_bottom = 146.0
 text = "Close"
 script = ExtResource("4_mbjm5")
+
+[node name="TimerDisplay" parent="TimeDisplay" instance=ExtResource("8_timer")]
 
 [node name="HUD" type="CanvasLayer" parent="TimeDisplay"]
 
