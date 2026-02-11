@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dv7ragrj4s6r5"]
 
 [ext_resource type="Script" path="res://timer.gd" id="1"]
-[ext_resource type="AudioStream" uid="uid://cn8y7xr2qwh2h" path="res://audio/denielcz-done-463074.ogg" id="2"]
+[ext_resource type="AudioStream" uid="uid://dp140ebesjccp" path="res://audio/denielcz-done-463074.mp3" id="2"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_empty"]
 

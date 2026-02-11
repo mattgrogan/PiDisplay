@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://cn8y7xr2qwh2h"
-path="res://.godot/imported/denielcz-done-463074.ogg-b4e9f3c8d1a7e6f5c2b8a9d4e7f1c3a5.oggvorbisstr"
+path="res://.godot/imported/denielcz-done-463074.ogg-0a67c50235b23804b4f5385feb69fee3.oggvorbisstr"
 
 [deps]
 
 source_file="res://audio/denielcz-done-463074.ogg"
-dest_files=["res://.godot/imported/denielcz-done-463074.ogg-b4e9f3c8d1a7e6f5c2b8a9d4e7f1c3a5.oggvorbisstr"]
+dest_files=["res://.godot/imported/denielcz-done-463074.ogg-0a67c50235b23804b4f5385feb69fee3.oggvorbisstr"]
 
 [params]
 
