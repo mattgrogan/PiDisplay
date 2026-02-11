@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://ForecastTimer.gd" id="5_1ordo"]
 [ext_resource type="PackedScene" uid="uid://1a1tfikj02ec" path="res://tides.tscn" id="5_3qk4p"]
 [ext_resource type="Script" path="res://BackgroundTimer.gd" id="7_la43m"]
+[ext_resource type="Script" path="res://Main.gd" id="11_main_script"]
 
 [sub_resource type="FontVariation" id="FontVariation_dqk7m"]
 spacing_top = -10
@@ -28,6 +29,7 @@ font = SubResource("SystemFont_1r6sm")
 font_size = 24
 
 [node name="Main" type="Node"]
+script = ExtResource("11_main_script")
 
 [node name="TimeDisplay" type="Node2D" parent="."]
 

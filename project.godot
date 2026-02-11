@@ -21,7 +21,6 @@ application/run/low_processor_mode=true
 
 window/size/viewport_width=800
 window/size/viewport_height=480
-window/size/mode=3
 window/stretch/mode="canvas_items"
 
 [input_devices]
