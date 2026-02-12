@@ -25,6 +25,16 @@ var sun_is_up: bool = false
 
 var today_sun_path: PackedFloat64Array
 
+# --- Stats sidebar data ---
+var sunrise_clock_hour: float
+var sunset_clock_hour: float
+var daylight_hours: float
+var sunrise_delta_min: float
+var sunset_delta_min: float
+var daylight_delta_min: float
+var next_event_name: String
+var next_event_days: int
+
 
 func _ready():
 	_compute_all()
@@ -65,24 +75,24 @@ func _compute_all():
 	# Push data to the renderer
 	_update_renderer()
 
+	# Compute and push stats sidebar data
+	_compute_stats()
+	_update_stats_renderer()
+
 
 func _update_sun_position(now: Dictionary, decl: float):
 	var clock_hour = now.hour + now.minute / 60.0 + now.second / 3600.0
 	var solar_hour = _clock_to_solar(clock_hour, current_doy)
 
+	# Compute hour angle and azimuth for any time of day
+	var hour_angle = (solar_hour - 12.0) * 15.0
+	sun_azimuth = _solar_azimuth_at_hour_angle(LATITUDE, decl, hour_angle)
+
+	# Determine if sun is above the horizon
 	var h0 = _hour_angle_sunrise(LATITUDE, decl)
 	var sunrise_solar = 12.0 - h0 / 15.0
 	var sunset_solar = 12.0 + h0 / 15.0
-
-	if solar_hour >= sunrise_solar and solar_hour <= sunset_solar:
-		sun_is_up = true
-		var fraction = (solar_hour - sunrise_solar) / (sunset_solar - sunrise_solar)
-		var index = int(fraction * (today_sun_path.size() - 1))
-		index = clampi(index, 0, today_sun_path.size() - 1)
-		sun_azimuth = today_sun_path[index]
-	else:
-		sun_is_up = false
-		sun_azimuth = 0.0
+	sun_is_up = solar_hour >= sunrise_solar and solar_hour <= sunset_solar
 
 
 func _update_renderer():
@@ -155,6 +165,14 @@ func _clock_to_solar(clock_hour: float, doy: int) -> float:
 	return clock_hour + (long_correction + eot) / 60.0
 
 
+func _solar_to_clock(solar_hour: float, doy: int) -> float:
+	# Converts solar time (hours) back to clock time (hours)
+	var std_meridian = UTC_OFFSET * 15.0
+	var long_correction = 4.0 * (std_meridian - LONGITUDE)
+	var eot = _equation_of_time(doy)
+	return solar_hour - (long_correction + eot) / 60.0
+
+
 func _solar_azimuth_at_hour_angle(lat: float, decl: float, h: float) -> float:
 	# Returns solar azimuth in degrees (0-360, from north clockwise)
 	var lat_rad = deg_to_rad(lat)
@@ -193,6 +211,68 @@ func _compute_sun_path(lat: float, decl: float) -> PackedFloat64Array:
 	return path
 
 
+# --- Stats Computation ---
+
+func _compute_stats():
+	# Today's sunrise/sunset clock times and daylight
+	var today_decl = _declination(current_doy)
+	var h0_today = _hour_angle_sunrise(LATITUDE, today_decl)
+	var sunrise_solar = 12.0 - h0_today / 15.0
+	var sunset_solar = 12.0 + h0_today / 15.0
+	sunrise_clock_hour = _solar_to_clock(sunrise_solar, current_doy)
+	sunset_clock_hour = _solar_to_clock(sunset_solar, current_doy)
+	daylight_hours = 2.0 * h0_today / 15.0
+
+	# Yesterday's values for deltas
+	var yesterday_doy = current_doy - 1
+	if yesterday_doy < 1:
+		yesterday_doy = 365
+	var yest_decl = _declination(yesterday_doy)
+	var h0_yest = _hour_angle_sunrise(LATITUDE, yest_decl)
+	var yest_sunrise_solar = 12.0 - h0_yest / 15.0
+	var yest_sunset_solar = 12.0 + h0_yest / 15.0
+	var yest_sunrise_clock = _solar_to_clock(yest_sunrise_solar, yesterday_doy)
+	var yest_sunset_clock = _solar_to_clock(yest_sunset_solar, yesterday_doy)
+	var yest_daylight = 2.0 * h0_yest / 15.0
+
+	# Deltas in minutes (positive = gaining)
+	sunrise_delta_min = (yest_sunrise_clock - sunrise_clock_hour) * 60.0
+	sunset_delta_min = (sunset_clock_hour - yest_sunset_clock) * 60.0
+	daylight_delta_min = (daylight_hours - yest_daylight) * 60.0
+
+	# Next solar event
+	var events = [
+		{"name": "Equinox", "doy": 79},
+		{"name": "Solstice", "doy": 172},
+		{"name": "Equinox", "doy": 265},
+		{"name": "Solstice", "doy": 355},
+	]
+	var best_name = ""
+	var best_days = 366
+	for ev in events:
+		var diff = ev.doy - current_doy
+		if diff < 0:
+			diff += 365
+		if diff < best_days:
+			best_days = diff
+			best_name = ev.name
+	next_event_name = best_name
+	next_event_days = best_days
+
+
+func _update_stats_renderer():
+	var stats = $CanvasLayer/StatsRenderer
+	stats.sunrise_clock_hour = sunrise_clock_hour
+	stats.sunset_clock_hour = sunset_clock_hour
+	stats.daylight_hours = daylight_hours
+	stats.sunrise_delta_min = sunrise_delta_min
+	stats.sunset_delta_min = sunset_delta_min
+	stats.daylight_delta_min = daylight_delta_min
+	stats.next_event_name = next_event_name
+	stats.next_event_days = next_event_days
+	stats.queue_redraw()
+
+
 # --- Timer & Click Handlers ---
 
 func _on_timer_timeout():
@@ -207,6 +287,7 @@ func _on_timer_timeout():
 		var today_decl = _declination(current_doy)
 		_update_sun_position(now, today_decl)
 		_update_renderer()
+		_update_stats_renderer()
 
 	$SubViewport/ChartRenderer.queue_redraw()
 	await get_tree().process_frame
