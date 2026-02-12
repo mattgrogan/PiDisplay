@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://g7o5wwn1re6a"]
+[gd_scene load_steps=19 format=3 uid="uid://g7o5wwn1re6a"]
 
 [ext_resource type="Script" path="res://Date.gd" id="1_6w8ij"]
 [ext_resource type="Script" path="res://Time.gd" id="2_qqntg"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://BackgroundTimer.gd" id="7_la43m"]
 [ext_resource type="PackedScene" uid="uid://dv7ragrj4s6r5" path="res://timer.tscn" id="8_timer"]
 [ext_resource type="Script" path="res://Main.gd" id="11_main_script"]
+[ext_resource type="PackedScene" path="res://solar_chart.tscn" id="12_solar"]
 
 [sub_resource type="FontVariation" id="FontVariation_dqk7m"]
 spacing_top = -10
@@ -116,6 +117,9 @@ scale = Vector2(0.83, 0.83)
 [node name="Tides" parent="TimeDisplay" instance=ExtResource("5_3qk4p")]
 position = Vector2(562, 233)
 scale = Vector2(0.83, 0.83)
+
+[node name="SolarChart" parent="TimeDisplay" instance=ExtResource("12_solar")]
+position = Vector2(-89, 198)
 
 [node name="TestButton" type="Button" parent="TimeDisplay"]
 offset_top = 100.0

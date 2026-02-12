@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://solar_chart.gd" id="1_sc"]
+[ext_resource type="Script" path="res://solar_chart_renderer.gd" id="2_scr"]
+
+[node name="SolarChart" type="Node2D"]
+script = ExtResource("1_sc")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+transparent_bg = true
+size = Vector2i(1200, 1200)
+render_target_update_mode = 4
+
+[node name="ChartRenderer" type="Node2D" parent="SubViewport"]
+position = Vector2(600, 600)
+scale = Vector2(2, 2)
+script = ExtResource("2_scr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = 92.0
+offset_top = 55.0
+offset_right = 222.0
+offset_bottom = 185.0
+color = Color(0.117647, 0.160784, 0.231373, 0.5)
+
+[node name="ChartThumb" type="TextureRect" parent="."]
+offset_left = 92.0
+offset_top = 55.0
+offset_right = 222.0
+offset_bottom = 185.0
+expand_mode = 5
+
+[node name="Button" type="Button" parent="ChartThumb"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_right = 813.0
+offset_bottom = 489.0
+color = Color(0, 0, 0, 1)
+
+[node name="ChartMaximized" type="TextureRect" parent="CanvasLayer"]
+offset_left = 160.0
+offset_top = 0.0
+offset_right = 640.0
+offset_bottom = 480.0
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Button" type="Button" parent="CanvasLayer/ChartMaximized"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -1.0
+offset_right = -2.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="pressed" from="ChartThumb/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/ChartMaximized/Button" to="." method="_on_close_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
