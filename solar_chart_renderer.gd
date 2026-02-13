@@ -8,27 +8,26 @@ const COLOR_HOUSE_FILL = Color("#1e293b")      # slate-800
 const COLOR_HOUSE_STROKE = Color("#64748b")    # slate-500
 const COLOR_DOOR_FILL = Color("#475569")       # slate-600
 const COLOR_DOOR_STROKE = Color("#94a3b8")     # slate-400
-const COLOR_SUMMER_ARC = Color("#fb923c", 0.7)    # orange-400 @ 70%
-const COLOR_TODAY_ARC = Color("#fde047", 0.9)     # yellow-300 @ 90%
-const COLOR_WINTER_ARC = Color("#60a5fa", 0.6)    # blue-400 @ 60%
+const COLOR_SUMMER_ARC = Color("#fb923c")         # orange-400
+const COLOR_TODAY_ARC = Color("#fde047")          # yellow-300
+const COLOR_WINTER_ARC = Color("#60a5fa")         # blue-400
 const COLOR_SUN_BODY = Color("#f4f4f5")        # zinc-100
 const COLOR_SUN_CENTER = Color("#ffffff")      # white
 const COLOR_SUN_RAYS = Color("#f4f4f5", 0.7)   # zinc-100 @ 70%
 const COLOR_SUN_DASHED = Color("#f4f4f5", 0.3) # zinc-100 @ 30%
 
-# --- Layout Constants (scaled up ~10% from original) ---
-const ARC_WIDTH = 28.0
+# --- Layout Constants ---
+const ARC_WIDTH = 44.0
 const INNER_EDGE = 160.0
-const OUTER_EDGE = INNER_EDGE + ARC_WIDTH * 3.0       # 244
+const OUTER_EDGE = INNER_EDGE + ARC_WIDTH * 2.0         # 248
 const CIRCLE_RADIUS = 250.0
 const HOUSE_W = 120.0
 const HOUSE_H = 180.0
 const VIEW_ROTATION = -83.0
 
-# Arc center radii (evenly spaced by ARC_WIDTH)
-const WINTER_CENTER_R = INNER_EDGE + ARC_WIDTH * 0.5   # 174
-const TODAY_CENTER_R = INNER_EDGE + ARC_WIDTH * 1.5     # 202
-const SUMMER_CENTER_R = INNER_EDGE + ARC_WIDTH * 2.5    # 230
+# Arc center radii (2 bands: today inner, summer/winter outer)
+const TODAY_CENTER_R = INNER_EDGE + ARC_WIDTH * 0.5      # 177.5
+const SUMMER_CENTER_R = INNER_EDGE + ARC_WIDTH * 1.5     # 212.5
 
 # --- Data (set by parent solar_chart.gd) ---
 var summer_sunrise_az: float = 0.0
@@ -51,46 +50,40 @@ func _az_to_xy(az_deg: float, radius: float) -> Vector2:
 
 
 func _draw():
-	# 1. Overall circle
-	draw_arc(Vector2.ZERO, CIRCLE_RADIUS, 0, TAU, 128, COLOR_CIRCLE, 2.0, true)
-
-	# 2. Cardinal direction lines (behind arcs)
-	var cardinal_azimuths = [0.0, 90.0, 180.0, 270.0]  # N, E, S, W
-	var line_inner = INNER_EDGE - 5.0
-	var line_outer = OUTER_EDGE + 5.0
-	for az in cardinal_azimuths:
-		var p1 = _az_to_xy(az, line_inner)
-		var p2 = _az_to_xy(az, line_outer)
-		draw_line(p1, p2, COLOR_CARDINAL_LINE, 2.0, true)
-
-	# 3. Summer solstice arc (outermost)
+	# 1. Summer solstice arc (outer band)
 	if summer_sunset_az > summer_sunrise_az:
 		var start_angle = _az_to_angle(summer_sunrise_az)
 		var end_angle = _az_to_angle(summer_sunset_az)
 		draw_arc(Vector2.ZERO, SUMMER_CENTER_R, start_angle, end_angle, 128, COLOR_SUMMER_ARC, ARC_WIDTH, false)
 
-	# 4. Today's arc (middle)
+	# 2. Winter solstice arc (overlaid on summer — same radius, shorter span)
+	if winter_sunset_az > winter_sunrise_az:
+		var start_angle = _az_to_angle(winter_sunrise_az)
+		var end_angle = _az_to_angle(winter_sunset_az)
+		draw_arc(Vector2.ZERO, SUMMER_CENTER_R, start_angle, end_angle, 128, COLOR_WINTER_ARC, ARC_WIDTH, false)
+
+	# 3. Today's arc (inner band)
 	if today_sunset_az > today_sunrise_az:
 		var start_angle = _az_to_angle(today_sunrise_az)
 		var end_angle = _az_to_angle(today_sunset_az)
 		draw_arc(Vector2.ZERO, TODAY_CENTER_R, start_angle, end_angle, 128, COLOR_TODAY_ARC, ARC_WIDTH, false)
 
-	# 5. Winter solstice arc (innermost)
-	if winter_sunset_az > winter_sunrise_az:
-		var start_angle = _az_to_angle(winter_sunrise_az)
-		var end_angle = _az_to_angle(winter_sunset_az)
-		draw_arc(Vector2.ZERO, WINTER_CENTER_R, start_angle, end_angle, 128, COLOR_WINTER_ARC, ARC_WIDTH, false)
+	# 4. Overall circle (on top of arcs)
+	draw_arc(Vector2.ZERO, CIRCLE_RADIUS, 0, TAU, 128, COLOR_CIRCLE, 10.0, true)
 
-	# 6. Cardinal direction labels
-	var labels = ["N", "E", "S", "W"]
-	var label_radius = CIRCLE_RADIUS + 18.0
-	for i in range(4):
-		var az = cardinal_azimuths[i]
-		var pos = _az_to_xy(az, label_radius)
-		var font = ThemeDB.fallback_font
-		var font_size = 24
-		var text_size = font.get_string_size(labels[i], HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
-		draw_string(font, pos - Vector2(text_size.x / 2.0, -text_size.y / 4.0), labels[i], HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, COLOR_CARDINAL_LABEL)
+	# 5. Cardinal direction lines (extending slightly outside the circle)
+	var cardinal_azimuths = [0.0, 90.0, 180.0, 270.0]  # N, E, S, W
+	for az in cardinal_azimuths:
+		var p1 = _az_to_xy(az, CIRCLE_RADIUS)
+		var p2 = _az_to_xy(az, CIRCLE_RADIUS + 25.0)
+		draw_line(p1, p2, COLOR_CARDINAL_LINE, 10.0, true)
+
+	# 6. North label (inside circle)
+	var font = ThemeDB.fallback_font
+	var font_size = 72
+	var n_label_pos = _az_to_xy(0.0, CIRCLE_RADIUS - 50.0)
+	var text_size = font.get_string_size("N", HORIZONTAL_ALIGNMENT_CENTER, -1, font_size)
+	draw_string(font, n_label_pos - Vector2(text_size.x / 2.0, -text_size.y / 4.0), "N", HORIZONTAL_ALIGNMENT_CENTER, -1, font_size, COLOR_CARDINAL_LABEL)
 
 	# 7. House rectangle (rotated -90 in local space)
 	_draw_house()
@@ -124,7 +117,7 @@ func _draw_house():
 
 	# Stroke (draw edges)
 	for i in range(4):
-		draw_line(corners[i], corners[(i + 1) % 4], COLOR_HOUSE_STROKE, 3.0, true)
+		draw_line(corners[i], corners[(i + 1) % 4], COLOR_HOUSE_STROKE, 10.0, true)
 
 	# Door: on the west (left in unrotated space) long wall, scaled with house
 	var door_local = [
@@ -139,7 +132,7 @@ func _draw_house():
 
 	draw_colored_polygon(door_corners, COLOR_DOOR_FILL)
 	for i in range(4):
-		draw_line(door_corners[i], door_corners[(i + 1) % 4], COLOR_DOOR_STROKE, 2.0, true)
+		draw_line(door_corners[i], door_corners[(i + 1) % 4], COLOR_DOOR_STROKE, 10.0, true)
 
 
 func _draw_sun():
@@ -148,7 +141,7 @@ func _draw_sun():
 
 	# Dashed line from house center to sun
 	var dashed_color = Color(COLOR_SUN_DASHED, COLOR_SUN_DASHED.a * dim)
-	_draw_dashed_line(Vector2.ZERO, sun_pos, dashed_color, 2.0, 10.0, 6.0)
+	_draw_dashed_line(Vector2.ZERO, sun_pos, dashed_color, 10.0, 10.0, 6.0)
 
 	# 8 rays at 45 degree intervals
 	var ray_color = Color(COLOR_SUN_RAYS, COLOR_SUN_RAYS.a * dim)
@@ -156,7 +149,7 @@ func _draw_sun():
 		var ray_angle = deg_to_rad(i * 45.0)
 		var ray_start = sun_pos + Vector2(cos(ray_angle), sin(ray_angle)) * 20.0
 		var ray_end = sun_pos + Vector2(cos(ray_angle), sin(ray_angle)) * 32.0
-		draw_line(ray_start, ray_end, ray_color, 4.0, true)
+		draw_line(ray_start, ray_end, ray_color, 10.0, true)
 
 	# Body circle
 	var body_color = Color(COLOR_SUN_BODY, dim)

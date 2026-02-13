@@ -22,7 +22,7 @@ offset_left = 92.0
 offset_top = 55.0
 offset_right = 222.0
 offset_bottom = 185.0
-color = Color(0.117647, 0.160784, 0.231373, 0.5)
+color = Color(0, 0, 0, 0.5)
 
 [node name="ChartThumb" type="TextureRect" parent="."]
 offset_left = 92.0
