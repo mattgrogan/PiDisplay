@@ -93,55 +93,70 @@ func _draw():
 
 
 func _draw_house():
-	# The house is rotated -90 degrees in local space
-	# Combined with view_rotation, the west wall ends up horizontal
 	var house_angle = deg_to_rad(-90.0)
 	var hw = HOUSE_W / 2.0
 	var hh = HOUSE_H / 2.0
+	var stroke_half = 5.0  # half of visual stroke width (10.0)
 
-	# House corners (before rotation)
+	# Outer polygon (stroke layer) — expanded to create sharp-cornered border
+	var outer_local = [
+		Vector2(-hw - stroke_half, -hh - stroke_half),
+		Vector2(hw + stroke_half, -hh - stroke_half),
+		Vector2(hw + stroke_half, hh + stroke_half),
+		Vector2(-hw - stroke_half, hh + stroke_half)
+	]
+	var outer = PackedVector2Array()
+	for c in outer_local:
+		outer.append(c.rotated(house_angle))
+	draw_colored_polygon(outer, COLOR_HOUSE_STROKE)
+
+	# Inner polygon (fill layer)
 	var corners_local = [
 		Vector2(-hw, -hh),
 		Vector2(hw, -hh),
 		Vector2(hw, hh),
 		Vector2(-hw, hh)
 	]
-
-	# Rotate corners
 	var corners = PackedVector2Array()
 	for c in corners_local:
 		corners.append(c.rotated(house_angle))
-
-	# Fill
 	draw_colored_polygon(corners, COLOR_HOUSE_FILL)
 
-	# Stroke (draw edges)
-	for i in range(4):
-		draw_line(corners[i], corners[(i + 1) % 4], COLOR_HOUSE_STROKE, 10.0, true)
-
-	# Door: on the west (left in unrotated space) long wall, scaled with house
+	# Door: on the west (left in unrotated space) long wall
 	var door_local = [
 		Vector2(-hw - 7.0, -15.0),
 		Vector2(-hw - 7.0 + 10.0, -15.0),
 		Vector2(-hw - 7.0 + 10.0, -15.0 + 30.0),
 		Vector2(-hw - 7.0, -15.0 + 30.0)
 	]
+	var door_outer_local = [
+		Vector2(-hw - 7.0 - stroke_half, -15.0 - stroke_half),
+		Vector2(-hw - 7.0 + 10.0 + stroke_half, -15.0 - stroke_half),
+		Vector2(-hw - 7.0 + 10.0 + stroke_half, -15.0 + 30.0 + stroke_half),
+		Vector2(-hw - 7.0 - stroke_half, -15.0 + 30.0 + stroke_half)
+	]
+	var door_outer = PackedVector2Array()
+	for c in door_outer_local:
+		door_outer.append(c.rotated(house_angle))
+	draw_colored_polygon(door_outer, COLOR_DOOR_STROKE)
+
 	var door_corners = PackedVector2Array()
 	for c in door_local:
 		door_corners.append(c.rotated(house_angle))
-
 	draw_colored_polygon(door_corners, COLOR_DOOR_FILL)
-	for i in range(4):
-		draw_line(door_corners[i], door_corners[(i + 1) % 4], COLOR_DOOR_STROKE, 10.0, true)
 
 
 func _draw_sun():
 	var sun_pos = _az_to_xy(sun_azimuth, TODAY_CENTER_R)
 	var dim = 1.0 if sun_is_up else 0.3
 
-	# Dashed line from house center to sun
-	var dashed_color = Color(COLOR_SUN_DASHED, COLOR_SUN_DASHED.a * dim)
-	_draw_dashed_line(Vector2.ZERO, sun_pos, dashed_color, 10.0, 10.0, 6.0)
+	# Dashed line from center toward sun — 60% of circle radius, fully opaque
+	var line_end = sun_pos.normalized() * CIRCLE_RADIUS * 0.5
+	var line_color = Color(COLOR_SUN_DASHED, dim)
+	_draw_dashed_line(Vector2.ZERO, line_end, line_color, 10.0, 10.0, 6.0)
+
+	# Semi-transparent black circle behind sun for visibility
+	draw_circle(sun_pos, 36.0, Color(0, 0, 0, 0.5 * dim))
 
 	# 8 rays at 45 degree intervals
 	var ray_color = Color(COLOR_SUN_RAYS, COLOR_SUN_RAYS.a * dim)
